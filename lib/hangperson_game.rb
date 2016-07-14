@@ -23,10 +23,8 @@ class HangpersonGame
   end
 
   def guess(letter)
-    raise ArgumentError if letter.nil?
-    raise ArgumentError if letter == "%"
-    raise ArgumentError if letter == ""
-    # raise ArgumentError if !letter.match(/^[[:alpha:]]$/)
+    raise ArgumentError if letter.nil? || letter.empty?
+    raise ArgumentError unless letter =~ /^[a-z]$/i
 
     letter = letter.downcase
     return false if @guesses.include? letter 
@@ -39,20 +37,17 @@ class HangpersonGame
   end
 
   def word_with_guesses
-    placeholder = ""
+    result = ""
     @word.each_char do |char| 
-      placeholder += (@guesses.include? char)? char : '-' 
+      result += (@guesses.include? char)? char : '-' 
     end
-    placeholder
+    result
   end
 
   def check_win_or_lose
-    if @word.downcase.chars.sort.join == self.guesses.chars.sort.join
-      :win 
-    elsif self.wrong_guesses.length >= 7
-      :lose 
-    else 
-      :play 
-    end
+    return :win if !word_with_guesses.include? '-'
+    return :lose if @wrong_guesses.length >= 7
+
+    :play 
   end
 end
