@@ -13,6 +13,8 @@ class HangpersonGame
     @word = word
     @guesses = ''
     @wrong_guesses = ''
+    puts "Hi hi hi hi"
+    puts "#{@word}"
   end
 
   def self.get_random_word
@@ -34,6 +36,7 @@ class HangpersonGame
     else
       @wrong_guesses += letter
     end
+    true
   end
 
   def word_with_guesses
